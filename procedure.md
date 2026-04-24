@@ -21,7 +21,7 @@ git checkout feat/mysql-database-integration
 Open MySQL CLI and run the schema file:
 
 ```bash
-mysql -u root -p < database/schema.sql
+mysql -u root -p < server/database/schema.sql
 ```
 
 Enter your MySQL root password when prompted (`saram`).
@@ -44,7 +44,7 @@ This creates:
 ## Step 3 — Seed the products
 
 ```bash
-mysql -u root -p < database/seed.sql
+mysql -u root -p < server/database/seed.sql
 ```
 
 This inserts:
@@ -65,7 +65,7 @@ Installs: `express`, `mysql2`, `cors`, `dotenv`, `nodemon`
 
 ## Step 5 — Configure environment
 
-The `.env` file already has the correct config:
+The `.env` file is located in `server/.env` with the correct config:
 
 ```
 DB_HOST=localhost
@@ -84,10 +84,10 @@ If your MySQL password is different, update `DB_PASSWORD` in `.env`.
 
 ```bash
 # Production
-node server.js
+node server/server.js
 
 # Development (auto-restart on file changes)
-npm run dev
+cd server && npm run dev
 ```
 
 Server starts at: **http://localhost:3000**

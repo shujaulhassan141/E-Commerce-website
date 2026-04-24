@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 const express  = require('express');
 const cors     = require('cors');
 const path     = require('path');
@@ -8,8 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname)));
+// Serve static frontend files from public/
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 // API routes
 app.use('/api/products',  require('./api/products'));
