@@ -4,6 +4,12 @@
 // ========================================
 
 // 1. HELPER FUNCTIONS
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
 function getCart() {
     var cartText = localStorage.getItem('cart');
     if (cartText) {
@@ -93,39 +99,69 @@ function showCart() {
         return;
     }
 
-    // Clear current items
-    itemsBox.innerHTML = '';
-
-    // Loop through cart items and build HTML
+    // Build each row using safe DOM methods, append once via fragment
     var subtotal = 0;
+    var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < cart.length; i++) {
         var item = cart[i];
         var itemTotal = item.price * item.quantity;
         subtotal = subtotal + itemTotal;
 
-        // Create HTML string
-        var html = '<div class="cart-item">';
-        html += '<img src="' + item.image + '" class="cart-item-image">';
-        html += '<div class="cart-item-details">';
-        html += '<h3>' + item.name + '</h3>';
-        html += '<p class="cart-item-price">$' + item.price.toFixed(2) + '</p>';
-        html += '</div>';
-        html += '<div class="cart-item-quantity">';
-        html += '<button class="qty-btn" onclick="changeQty(' + i + ', -1)">-</button>';
-        html += '<span>' + item.quantity + '</span>';
-        html += '<button class="qty-btn" onclick="changeQty(' + i + ', 1)">+</button>';
-        html += '</div>';
-        html += '<div class="cart-item-total">';
-        html += '<p>$' + itemTotal.toFixed(2) + '</p>';
-        html += '<button class="remove-btn" onclick="removeItem(' + i + ')">Remove</button>';
-        html += '</div>';
-        html += '</div>';
+        var row = document.createElement('div');
+        row.className = 'cart-item';
 
-        // Add to the box
-        itemsBox.innerHTML += html;
+        var img = document.createElement('img');
+        img.src = item.image;
+        img.alt = '';
+        img.className = 'cart-item-image';
+
+        var details = document.createElement('div');
+        details.className = 'cart-item-details';
+        var nameEl = document.createElement('h3');
+        nameEl.textContent = item.name;
+        var priceEl = document.createElement('p');
+        priceEl.className = 'cart-item-price';
+        priceEl.textContent = '$' + item.price.toFixed(2);
+        details.appendChild(nameEl);
+        details.appendChild(priceEl);
+
+        var qtyDiv = document.createElement('div');
+        qtyDiv.className = 'cart-item-quantity';
+        var btnMinus = document.createElement('button');
+        btnMinus.className = 'qty-btn';
+        btnMinus.textContent = '-';
+        btnMinus.setAttribute('onclick', 'changeQty(' + i + ', -1)');
+        var qtySpan = document.createElement('span');
+        qtySpan.textContent = item.quantity;
+        var btnPlus = document.createElement('button');
+        btnPlus.className = 'qty-btn';
+        btnPlus.textContent = '+';
+        btnPlus.setAttribute('onclick', 'changeQty(' + i + ', 1)');
+        qtyDiv.appendChild(btnMinus);
+        qtyDiv.appendChild(qtySpan);
+        qtyDiv.appendChild(btnPlus);
+
+        var totalDiv = document.createElement('div');
+        totalDiv.className = 'cart-item-total';
+        var totalP = document.createElement('p');
+        totalP.textContent = '$' + itemTotal.toFixed(2);
+        var removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = 'Remove';
+        removeBtn.setAttribute('onclick', 'removeItem(' + i + ')');
+        totalDiv.appendChild(totalP);
+        totalDiv.appendChild(removeBtn);
+
+        row.appendChild(img);
+        row.appendChild(details);
+        row.appendChild(qtyDiv);
+        row.appendChild(totalDiv);
+        fragment.appendChild(row);
     }
 
+    itemsBox.innerHTML = '';
+    itemsBox.appendChild(fragment);
     updateSummary(subtotal);
 }
 

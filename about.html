@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — H&S Online Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        body { padding-top: var(--nav-h); }
+
+        /* ── Hero ─────────────────────────────────── */
+        .about-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 96px 56px 80px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(232,0,26,0.07) 0%, transparent 70%),
+                var(--bg);
+        }
+
+        .about-hero-eyebrow {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--red);
+            margin-bottom: 20px;
+        }
+
+        .about-hero h1 {
+            font-family: var(--font-head);
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            color: var(--white);
+            margin-bottom: 28px;
+        }
+
+        .about-hero h1 span {
+            color: var(--red);
+        }
+
+        .about-hero-desc {
+            max-width: 580px;
+            margin: 0 auto;
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--text);
+        }
+
+        .about-hero-bg-text {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-head);
+            font-size: 22vw;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.03em;
+        }
+
+        /* ── Stats Bar ────────────────────────────── */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .stat-item {
+            padding: 40px 24px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+            transition: background 0.2s var(--ease);
+        }
+
+        .stat-item:last-child { border-right: none; }
+        .stat-item:hover { background: rgba(232,0,26,0.04); }
+
+        .stat-number {
+            font-family: var(--font-head);
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-number span { color: var(--red); }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+        }
+
+        /* ── Story Section ────────────────────────── */
+        .story-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 96px 56px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .story-label {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--red);
+            margin-bottom: 16px;
+        }
+
+        .story-heading {
+            font-family: var(--font-head);
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.05;
+            color: var(--white);
+            margin-bottom: 24px;
+        }
+
+        .story-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .story-visual {
+            position: relative;
+        }
+
+        .story-img-frame {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .story-img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.9) contrast(1.05);
+            transition: transform 0.6s var(--ease);
+        }
+
+        .story-img-frame:hover img { transform: scale(1.04); }
+
+        .story-img-accent {
+            position: absolute;
+            bottom: -16px;
+            right: -16px;
+            width: 120px;
+            height: 120px;
+            background: var(--red);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.35;
+        }
+
+        .story-badge {
+            position: absolute;
+            bottom: 24px;
+            left: -24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-bright);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .story-badge-icon {
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        .story-badge-text strong {
+            display: block;
+            font-family: var(--font-head);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .story-badge-text span {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* ── Values ───────────────────────────────── */
+        .values-section {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 56px;
+        }
+
+        .values-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .values-header .story-label { display: block; margin-bottom: 12px; }
+
+        .values-header h2 {
+            font-family: var(--font-head);
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .value-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            transition: all 0.3s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--red);
+            transform: scaleX(0);
+            transition: transform 0.3s var(--ease);
+        }
+
+        .value-card:hover {
+            border-color: rgba(232,0,26,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .value-card:hover::before { transform: scaleX(1); }
+
+        .value-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .value-title {
+            font-family: var(--font-head);
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .value-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        /* ── Team ─────────────────────────────────── */
+        .team-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 96px 56px;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .team-header .story-label { display: block; margin-bottom: 12px; }
+
+        .team-header h2 {
+            font-family: var(--font-head);
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.35s var(--ease);
+            text-align: center;
+        }
+
+        .team-card:hover {
+            border-color: rgba(232,0,26,0.25);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+        }
+
+        .team-card-img-wrap {
+            width: 100%;
+            height: 240px;
+            background: var(--bg-surface);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s var(--ease);
+        }
+
+        .team-card:hover .team-card-img-wrap img { transform: scale(1.05); }
+
+        .team-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,5,10,0.8) 0%, transparent 60%);
+        }
+
+        .team-avatar-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-head);
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--red);
+            background: linear-gradient(135deg, var(--bg-surface), var(--bg-card));
+            letter-spacing: -4px;
+        }
+
+        .team-card-body {
+            padding: 24px;
+        }
+
+        .team-name {
+            font-family: var(--font-head);
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .team-role {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--red);
+            margin-bottom: 14px;
+        }
+
+        .team-bio {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 18px;
+        }
+
+        .team-contact-links {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .team-contact-link {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 100px;
+            transition: all 0.2s var(--ease);
+            text-decoration: none;
+        }
+
+        .team-contact-link:hover {
+            color: var(--white);
+            border-color: var(--red);
+            background: var(--red-dim);
+        }
+
+        /* ── Responsive ───────────────────────────── */
+        @media (max-width: 900px) {
+            .about-hero { padding: 64px 24px 56px; }
+            .story-section { grid-template-columns: 1fr; gap: 40px; padding: 64px 24px; }
+            .story-visual { order: -1; }
+            .story-badge { left: 12px; bottom: 12px; }
+            .values-section { padding: 56px 24px; }
+            .values-grid { grid-template-columns: 1fr; gap: 14px; }
+            .team-section { padding: 64px 24px; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .stat-item:nth-child(2) { border-right: none; }
+            .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+        }
+
+        @media (max-width: 600px) {
+            .team-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .stats-bar { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── NAVBAR ─────────────────────────────────────── -->
+    <header class="navbar">
+        <a href="index.html" class="logo-link">
+            <div class="logo-scene">
+                <div class="logo-cube">
+                    <div class="cube-face front">H</div>
+                    <div class="cube-face back">S</div>
+                    <div class="cube-face right">H</div>
+                    <div class="cube-face left">S</div>
+                    <div class="cube-face top"></div>
+                    <div class="cube-face bottom"></div>
+                </div>
+            </div>
+            <div class="logo-text">H&S Online Store</div>
+        </a>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-icons">
+            <a href="cart.html" class="cart-icon">
+                <span>🛒</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+        </div>
+    </header>
+
+
+    <!-- ── HERO ───────────────────────────────────────── -->
+    <section class="about-hero">
+        <div class="about-hero-bg-text">H&S</div>
+        <p class="about-hero-eyebrow">Our Story</p>
+        <h1>We Are<br><span>H&S</span> Store</h1>
+        <p class="about-hero-desc">
+            Born from a passion for quality and a drive to make premium products accessible to everyone —
+            H&S Store brings you the best in tech, fashion, and lifestyle, delivered right to your door.
+        </p>
+    </section>
+
+
+    <!-- ── STATS BAR ──────────────────────────────────── -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">18<span>+</span></div>
+            <div class="stat-label">Products</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">500<span>+</span></div>
+            <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">2<span></span></div>
+            <div class="stat-label">Founders</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24<span>/7</span></div>
+            <div class="stat-label">Support</div>
+        </div>
+    </div>
+
+
+    <!-- ── STORY ──────────────────────────────────────── -->
+    <section class="story-section">
+        <div class="story-content">
+            <p class="story-label">How it started</p>
+            <h2 class="story-heading">From Idea<br>to Reality</h2>
+            <p class="story-text">
+                H&S Online Store was founded by two friends — Hamza Saleem and Shuja ul Hassan —
+                with one shared belief: great products should not come with a premium price tag.
+            </p>
+            <p class="story-text">
+                Starting with a small catalog of hand-picked tech accessories and fashion items,
+                we grew by listening to our customers and relentlessly curating quality. Every
+                product in our store is selected with care — because we shop here too.
+            </p>
+            <p class="story-text">
+                Today, H&S serves customers across Pakistan with fast delivery, transparent
+                pricing, and a promise that stands behind every order.
+            </p>
+        </div>
+
+        <div class="story-visual">
+            <div class="story-img-frame">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop"
+                     alt="Our store">
+                <div class="team-card-overlay"></div>
+            </div>
+            <div class="story-img-accent"></div>
+            <div class="story-badge">
+                <div class="story-badge-icon">🛍️</div>
+                <div class="story-badge-text">
+                    <strong>Est. 2024</strong>
+                    <span>Pakistan</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ── VALUES ─────────────────────────────────────── -->
+    <section class="values-section">
+        <div class="values-inner">
+            <div class="values-header">
+                <span class="story-label">What drives us</span>
+                <h2>Our Values</h2>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <div class="value-title">Quality First</div>
+                    <p class="value-desc">
+                        Every product passes a quality check before it reaches our store.
+                        We stock only what we believe in — no compromises.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">💰</div>
+                    <div class="value-title">Fair Pricing</div>
+                    <p class="value-desc">
+                        Great products for real people. Our prices reflect value,
+                        not hype. No hidden fees. What you see is what you pay.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <div class="value-title">Customer Trust</div>
+                    <p class="value-desc">
+                        We treat every customer as a long-term partner.
+                        Your satisfaction is not a metric — it is our purpose.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <div class="value-title">Fast Delivery</div>
+                    <p class="value-desc">
+                        Order today, receive fast. We work with reliable delivery
+                        partners to get your products to you without the wait.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <div class="value-title">Secure Shopping</div>
+                    <p class="value-desc">
+                        Your data and payments are safe with us. We use
+                        secure, verified channels for every transaction.
+                    </p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🔄</div>
+                    <div class="value-title">Easy Returns</div>
+                    <p class="value-desc">
+                        Not happy? No problem. Our return policy is simple,
+                        transparent, and designed around your convenience.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ── TEAM ───────────────────────────────────────── -->
+    <section class="team-section">
+        <div class="team-header">
+            <span class="story-label">The people behind it</span>
+            <h2>Meet the Founders</h2>
+        </div>
+
+        <div class="team-grid">
+            <!-- Hamza -->
+            <div class="team-card">
+                <div class="team-card-img-wrap">
+                    <div class="team-avatar-fallback">HS</div>
+                </div>
+                <div class="team-card-body">
+                    <div class="team-name">Hamza Saleem</div>
+                    <div class="team-role">Co-Founder &amp; Developer</div>
+                    <p class="team-bio">
+                        Frontend developer and product enthusiast. Hamza built and maintains
+                        the H&S platform, focused on fast, beautiful shopping experiences.
+                    </p>
+                    <div class="team-contact-links">
+                        <a href="mailto:hamzasaleem22@gmail.com" class="team-contact-link">✉ Email</a>
+                        <a href="tel:03035070436" class="team-contact-link">📞 Call</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shuja -->
+            <div class="team-card">
+                <div class="team-card-img-wrap">
+                    <div class="team-avatar-fallback">SH</div>
+                </div>
+                <div class="team-card-body">
+                    <div class="team-name">Shuja ul Hassan</div>
+                    <div class="team-role">Co-Founder &amp; Operations</div>
+                    <p class="team-bio">
+                        Operations and product curation lead. Shuja manages sourcing,
+                        partnerships, and ensures every customer gets a seamless experience.
+                    </p>
+                    <div class="team-contact-links">
+                        <a href="mailto:shujaulhassan@gmail.com" class="team-contact-link">✉ Email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ── FOOTER ─────────────────────────────────────── -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We provide the best products at the best prices. Quality guaranteed.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p style="margin-bottom: 0.4rem;">&copy; 2024 H&S E-Commerce. All rights reserved.</p>
+            <p style="margin-bottom: 0.4rem; font-size: 0.9rem;">Website developed by <strong>Hamza Saleem</strong> &amp; <strong>Shuja ul Hassan</strong></p>
+            <div style="font-size: 0.85rem; margin-top: 0.4rem;">
+                <p style="margin: 0.3rem 0;">📞 <a href="tel:03035070436" style="color: var(--red);">0303-5070436</a></p>
+                <p style="margin: 0.3rem 0;">✉ <a href="mailto:hamzasaleem22@gmail.com" style="color: var(--red);">hamzasaleem22@gmail.com</a> &nbsp;|&nbsp; <a href="mailto:shujaulhassan@gmail.com" style="color: var(--red);">shujaulhassan@gmail.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+
+</body>
+</html>
