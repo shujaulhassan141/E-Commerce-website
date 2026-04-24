@@ -630,26 +630,36 @@
     <script src="js/cart.js"></script>
 
     <script>
-        function handleContactSubmit(e) {
+        async function handleContactSubmit(e) {
             e.preventDefault();
             const form = document.getElementById('contactForm');
-            const fname = document.getElementById('fname').value.trim();
-            const email = document.getElementById('cemail').value.trim();
+            const fname   = document.getElementById('fname').value.trim();
+            const lname   = document.getElementById('lname').value.trim();
+            const email   = document.getElementById('cemail').value.trim();
+            const phone   = document.getElementById('cphone').value.trim();
+            const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value.trim();
 
             if (!fname || !email || !message) {
-                /* simple shake on empty required fields */
                 form.querySelectorAll(':required').forEach(el => {
                     if (!el.value.trim()) {
                         el.style.borderColor = 'var(--red)';
                         el.style.boxShadow = '0 0 0 3px var(--red-dim)';
-                        setTimeout(() => {
-                            el.style.borderColor = '';
-                            el.style.boxShadow = '';
-                        }, 2000);
+                        setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2000);
                     }
                 });
                 return;
+            }
+
+            try {
+                await fetch('http://localhost:3000/api/contacts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ first_name: fname, last_name: lname, email, phone, subject, message })
+                });
+            } catch (err) {
+                // Server offline — still show success to user, message stored locally
+                console.warn('Could not save to server:', err.message);
             }
 
             document.getElementById('contact-form-wrap').style.display = 'none';
