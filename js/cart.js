@@ -1,112 +1,123 @@
 // ========================================
-// BASIC SHOPPING CART JAVASCRIPT
-// Uses simple loops and basic logic
+// H&S Store — Cart + API Integration
+// Falls back to localStorage when server is offline
 // ========================================
 
-// 1. HELPER FUNCTIONS
-function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+var API_BASE = 'http://localhost:3000/api';
+
+// ── Session token (identifies guest cart) ──
+function getSessionToken() {
+    var token = localStorage.getItem('hs_session');
+    if (!token) {
+        token = 'guest_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+        localStorage.setItem('hs_session', token);
+    }
+    return token;
 }
 
-function getCart() {
-    var cartText = localStorage.getItem('cart');
-    if (cartText) {
-        return JSON.parse(cartText);
-    } else {
-        return [];
+// ── API helper ─────────────────────────────
+async function apiRequest(method, path, body) {
+    try {
+        var opts = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'x-session-token': getSessionToken()
+            }
+        };
+        if (body) opts.body = JSON.stringify(body);
+        var res = await fetch(API_BASE + path, opts);
+        return await res.json();
+    } catch (e) {
+        return { success: false, error: 'Server offline', offline: true };
     }
 }
 
-function saveCart(cart) {
-    var cartText = JSON.stringify(cart);
-    localStorage.setItem('cart', cartText);
+// ── localStorage helpers (offline fallback) ──
+function getLocalCart() {
+    var text = localStorage.getItem('cart');
+    return text ? JSON.parse(text) : [];
+}
+
+function saveLocalCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCount();
 }
 
 // ========================================
-// 2. MAIN FUNCTIONS
+// MAIN FUNCTIONS
 // ========================================
 
-// Add Product to Cart
-function addToCart(name, price, image) {
-    var cart = getCart();
+// Add to cart (online + offline fallback)
+async function addToCart(name, price, image, productId) {
+    var cart = getLocalCart();
     var found = false;
-
-    // Basic Loop to check if item exists
     for (var i = 0; i < cart.length; i++) {
         if (cart[i].name === name) {
-            cart[i].quantity = cart[i].quantity + 1;
+            cart[i].quantity++;
             found = true;
             break;
         }
     }
+    if (!found) {
+        cart.push({ name: name, price: Number(price), image: image, quantity: 1, product_id: productId || null });
+    }
+    saveLocalCart(cart);
 
-    // If not found, add new item
-    if (found === false) {
-        var newItem = {
-            name: name,
-            price: Number(price),
-            image: image,
-            quantity: 1
-        };
-        cart.push(newItem);
+    // Sync to server if productId provided
+    if (productId) {
+        await apiRequest('POST', '/cart', { product_id: productId, quantity: 1 });
     }
 
-    saveCart(cart);
     alert('Product added to cart!');
 }
 
-// Update the Cart Count number in navbar
+// Update count badge
 function updateCount() {
-    var cart = getCart();
+    var cart = getLocalCart();
     var total = 0;
+    for (var i = 0; i < cart.length; i++) total += cart[i].quantity;
 
-    // Basic Loop to count total items
-    for (var i = 0; i < cart.length; i++) {
-        total = total + cart[i].quantity;
-    }
-
-    // Update the HTML elements
-    var cartIcons = document.querySelectorAll('.cart-count');
-    for (var j = 0; j < cartIcons.length; j++) {
-        cartIcons[j].textContent = total;
-    }
-
-    var cartCountId = document.getElementById('cartCount');
-    if (cartCountId) {
-        cartCountId.textContent = total;
-    }
+    var els = document.querySelectorAll('.cart-count, #cartCount');
+    for (var j = 0; j < els.length; j++) els[j].textContent = total;
 }
 
-// Show Cart Items on the cart page
-function showCart() {
+// Show cart page items
+async function showCart() {
     var itemsBox = document.getElementById('cart-items');
+    if (!itemsBox) return;
 
-    // Safety check: if we are not on cart page, stop
-    if (!itemsBox) {
-        return;
+    // Try to sync from server
+    var serverData = await apiRequest('GET', '/cart');
+    if (serverData.success && serverData.items && serverData.items.length) {
+        var merged = serverData.items.map(function(i) {
+            return { name: i.name, price: Number(i.price), image: i.image_url, quantity: i.quantity, product_id: i.product_id };
+        });
+        saveLocalCart(merged);
     }
 
-    var cart = getCart();
+    var cart = getLocalCart();
     updateCount();
 
-    // If cart is empty
-    if (cart.length === 0) {
-        itemsBox.innerHTML = '<p style="text-align: center; padding: 2rem; color: #888;">Your cart is empty</p>';
+    // Clear container safely
+    while (itemsBox.firstChild) itemsBox.removeChild(itemsBox.firstChild);
+
+    if (!cart.length) {
+        var emptyMsg = document.createElement('p');
+        emptyMsg.textContent = 'Your cart is empty';
+        emptyMsg.style.cssText = 'text-align:center;padding:2rem;color:#888;';
+        itemsBox.appendChild(emptyMsg);
         updateSummary(0);
         return;
     }
 
-    // Build each row using safe DOM methods, append once via fragment
     var subtotal = 0;
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < cart.length; i++) {
         var item = cart[i];
         var itemTotal = item.price * item.quantity;
-        subtotal = subtotal + itemTotal;
+        subtotal += itemTotal;
 
         var row = document.createElement('div');
         row.className = 'cart-item';
@@ -160,82 +171,97 @@ function showCart() {
         fragment.appendChild(row);
     }
 
-    itemsBox.innerHTML = '';
     itemsBox.appendChild(fragment);
     updateSummary(subtotal);
 }
 
-// Update the Summary Box (Total, Discount)
 function updateSummary(subtotal) {
-    var discount = subtotal * 0.20; // 20% discount
+    var discount = subtotal * 0.20;
     var total = subtotal - discount;
 
-    var subtotalEl = document.getElementById('subtotal');
-    if (subtotalEl) subtotalEl.textContent = '$' + subtotal.toFixed(2);
-
-    var discountEl = document.getElementById('discount');
-    if (discountEl) discountEl.textContent = '$' + discount.toFixed(2);
-
-    var totalEl = document.getElementById('total');
-    if (totalEl) totalEl.textContent = '$' + total.toFixed(2);
+    var s = document.getElementById('subtotal');
+    var d = document.getElementById('discount');
+    var t = document.getElementById('total');
+    if (s) s.textContent = '$' + subtotal.toFixed(2);
+    if (d) d.textContent = '$' + discount.toFixed(2);
+    if (t) t.textContent = '$' + total.toFixed(2);
 }
 
-// Change Quantity (+ or -)
-function changeQty(index, change) {
-    var cart = getCart();
+async function changeQty(index, change) {
+    var cart = getLocalCart();
+    if (!cart[index]) return;
 
-    if (cart[index]) {
-        cart[index].quantity = cart[index].quantity + change;
-
-        // If quantity is 0 or less, remove the item
-        if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-        }
-
-        saveCart(cart);
-        showCart();
+    cart[index].quantity += change;
+    if (cart[index].quantity <= 0) {
+        var pid = cart[index].product_id;
+        cart.splice(index, 1);
+        if (pid) await apiRequest('DELETE', '/cart/' + pid);
+    } else {
+        var pid2 = cart[index].product_id;
+        if (pid2) await apiRequest('PUT', '/cart/' + pid2, { quantity: cart[index].quantity });
     }
-}
 
-// Remove Item completely
-function removeItem(index) {
-    var cart = getCart();
-    cart.splice(index, 1);
-    saveCart(cart);
+    saveLocalCart(cart);
     showCart();
 }
 
-// Clear entire cart
-function clearCart() {
-    var sure = confirm('Clear all items?');
-    if (sure) {
+async function removeItem(index) {
+    var cart = getLocalCart();
+    var pid = cart[index] ? cart[index].product_id : null;
+    cart.splice(index, 1);
+    saveLocalCart(cart);
+    if (pid) await apiRequest('DELETE', '/cart/' + pid);
+    showCart();
+}
+
+async function clearCart() {
+    if (!confirm('Clear all items?')) return;
+    localStorage.removeItem('cart');
+    await apiRequest('DELETE', '/cart');
+    showCart();
+}
+
+async function checkout() {
+    var result = await apiRequest('POST', '/orders/checkout');
+    if (result.success) {
+        alert('Order placed! Order #' + result.order.id + '\nTotal: $' + result.order.total.toFixed(2));
         localStorage.removeItem('cart');
         showCart();
+    } else if (result.offline) {
+        alert('Checkout coming soon! (Server offline)');
+    } else {
+        alert('Checkout failed: ' + result.error);
     }
 }
 
-// Checkout Button (Placeholder)
-function checkout() {
-    alert('Checkout coming soon!');
-}
-
 // ========================================
-// 3. LOGIN FUNCTIONS (Simple)
+// LOGIN FUNCTIONS
 // ========================================
 
-function googleLogin() {
+async function googleLogin() {
+    var fakeGoogleId = 'google_' + Date.now();
+    var result = await apiRequest('POST', '/users/login/google', {
+        google_id: fakeGoogleId,
+        name: 'Google User',
+        email: 'user@gmail.com'
+    });
+    if (result.success) {
+        localStorage.setItem('hs_session', result.token);
+    }
     setLoginState(true);
     alert('Logged in with Google successfully!');
 }
 
-function loginWithPhone() {
+async function loginWithPhone() {
     var phoneInput = document.getElementById('phoneInput');
-    var phone = phoneInput.value;
-
-    // Check availability of phone number (Simple regex for digits)
+    var phone = phoneInput ? phoneInput.value : '';
     var isNumber = /^\d+$/.test(phone);
 
     if (phone.length === 11 && isNumber) {
+        var result = await apiRequest('POST', '/users/login/phone', { phone: phone });
+        if (result.success) {
+            localStorage.setItem('hs_session', result.token);
+        }
         setLoginState(true);
         alert('Logged in successfully with ' + phone);
     } else {
@@ -243,25 +269,15 @@ function loginWithPhone() {
     }
 }
 
-function verifyOTP() {
-    // Not used anymore, simpler flow
-    console.log("OTP Verification removed");
-}
-
 function setLoginState(isLoggedIn) {
     var loginToggle = document.getElementById('login-toggle');
     var loggedInToggle = document.getElementById('logged-in-toggle');
-
-    if (loginToggle) {
-        loginToggle.checked = !isLoggedIn; // Uncheck login modal
-    }
-    if (loggedInToggle) {
-        loggedInToggle.checked = isLoggedIn; // Check logged in state
-    }
+    if (loginToggle) loginToggle.checked = !isLoggedIn;
+    if (loggedInToggle) loggedInToggle.checked = isLoggedIn;
 }
 
 // ========================================
-// 4. RUN ON PAGE LOAD
+// INIT
 // ========================================
 document.addEventListener('DOMContentLoaded', function () {
     updateCount();
