@@ -4,9 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICT E-Commerce - Home</title>
+    <title>H&S Online Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        body { padding-top: 72px; }
+    </style>
 </head>
 
 <body>
@@ -108,15 +113,23 @@
          ================================================================================= -->
     <section class="hero">
         <div class="hero-bg-text">FASHION</div>
+
+        <!-- Floating parallax image (follows cursor + scroll) -->
+        <div class="hero-float-wrapper" id="heroFloatWrapper">
+            <img id="heroFloatImg"
+                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop"
+                alt="Featured Product"
+                class="hero-float-img">
+            <div class="hero-float-glow"></div>
+        </div>
+
         <div class="v2-layout">
             <div class="typewriter-container">
                 <h1 class="typewriter-text">GHAR SAY GAHR TAK SHOPPING</h1>
             </div>
 
             <!-- LEFT: Slider (Controlled by Radio Buttons) -->
-            <div class="hamza"
-                style="height:600px; width:1600px; position:absolute; top:0; left:0; background-size: cover; background-position: center;">
-            </div>
+            <div class="hamza"></div>
         </div>
     </section>
 
@@ -465,6 +478,49 @@
 
     <!-- External JavaScript File -->
     <script src="js/cart.js"></script>
+
+    <script>
+        (function () {
+            const wrapper = document.getElementById('heroFloatWrapper');
+            if (!wrapper) return;
+
+            let mouseX = 0, mouseY = 0;
+            let currentX = 0, currentY = 0;
+            let scrollY = 0;
+            let raf;
+
+            // Smooth lerp toward target
+            function lerp(a, b, t) { return a + (b - a) * t; }
+
+            document.addEventListener('mousemove', function (e) {
+                // Map mouse to -1..1 relative to viewport center
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+
+            window.addEventListener('scroll', function () {
+                scrollY = window.scrollY;
+            }, { passive: true });
+
+            function animate() {
+                // Smooth interpolation (0.06 = gentle lag)
+                currentX = lerp(currentX, mouseX * 40, 0.06);
+                currentY = lerp(currentY, mouseY * 25, 0.06);
+
+                const scrollOffset = scrollY * 0.35;
+                const scale = 1 + Math.min(scrollY * 0.0003, 0.15);
+                const opacity = Math.max(1 - scrollY * 0.003, 0);
+
+                wrapper.style.transform =
+                    `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px - ${scrollOffset}px)) scale(${scale})`;
+                wrapper.style.opacity = opacity;
+
+                raf = requestAnimationFrame(animate);
+            }
+
+            animate();
+        })();
+    </script>
 </body>
 
 </html>
