@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICT E-Commerce - Home</title>
     <link rel="stylesheet" href="css/styles.css">
-
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
@@ -58,8 +58,7 @@
         <div class="nav-icons">
             <a href="cart.html" class="cart-icon">
                 <span>🛒</span>
-                <!-- Cart count is hardcoded to 2 for demo purposes -->
-
+                <span class="cart-count" id="cartCount">0</span>
             </a>
 
             <!-- Login / Profile Triggers (Visibility controlled by #logged-in-toggle) -->
@@ -117,14 +116,8 @@
             <!-- LEFT: Slider (Controlled by Radio Buttons) -->
             <div class="hamza"
                 style="height:600px; width:1600px; position:absolute; top:0; left:0; background-size: cover; background-position: center;">
-
-
-
-
             </div>
-
-
-
+        </div>
     </section>
 
 
@@ -137,16 +130,15 @@
         <!-- Product 1 -->
         <div class="product-card">
             <div class="discount-badge">20% OFF</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_02_10.521Z.png"
-                alt="Headphones" class="product-image">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop"
+                alt="Shoes" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭒</div>
                 <h3 class="product-name">Shoes Mirrels</h3>
                 <p class="product-price">$79.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$99.99</span></p>
-                <!-- Link to static product page -->
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Shoes Mirrels', '79.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_02_10.521Z.png')">Add
+                    onclick="addToCart('Shoes Mirrels', '79.99', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -154,7 +146,7 @@
         <!-- Product 2 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/smartwatch_dark_bg_1765817853949.png"
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop"
                 alt="Watch" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
@@ -162,7 +154,7 @@
                 <p class="product-price">$119.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$149.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Smart Watch', '119.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/smartwatch_dark_bg_1765817853949.png')">Add
+                    onclick="addToCart('Smart Watch', '119.99', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -170,15 +162,15 @@
         <!-- Product 3 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/running_shoes_dark_bg_1765818059548.png"
-                alt="Shoes" class="product-image">
+            <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1200&auto=format&fit=crop"
+                alt="Running Shoes" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭒</div>
                 <h3 class="product-name">Running Shoes</h3>
                 <p class="product-price">$63.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$79.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Running Shoes', '63.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/running_shoes_dark_bg_1765818059548.png')">Add
+                    onclick="addToCart('Running Shoes', '63.99', 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -236,7 +228,7 @@
         <!-- Product 7 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_trousers_dark_1765817139466.png"
+            <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=1200&auto=format&fit=crop"
                 alt="Formal Trousers" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
@@ -244,7 +236,7 @@
                 <p class="product-price">$79.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$99.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Premium Formal Trousers', '79.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_trousers_dark_1765817139466.png')">Add
+                    onclick="addToCart('Premium Formal Trousers', '79.99', 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -252,7 +244,7 @@
         <!-- Product 8 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_shirt_dark_1765817297421.png"
+            <img src="https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=1200&auto=format&fit=crop"
                 alt="Formal Shirt" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
@@ -260,7 +252,7 @@
                 <p class="product-price">$47.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$59.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Classic Formal Shirt', '47.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_shirt_dark_1765817297421.png')">Add
+                    onclick="addToCart('Classic Formal Shirt', '47.99', 'https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -268,7 +260,7 @@
         <!-- Product 9 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/baseball_cap_dark_1765817434159.png"
+            <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1200&auto=format&fit=crop"
                 alt="Baseball Cap" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭒</div>
@@ -276,7 +268,7 @@
                 <p class="product-price">$23.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$29.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Streetwear Baseball Cap', '23.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/baseball_cap_dark_1765817434159.png')">Add
+                    onclick="addToCart('Streetwear Baseball Cap', '23.99', 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -284,15 +276,15 @@
         <!-- Product 10 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_06_22.737Z.png"
-                alt="Product 10" class="product-image">
+            <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?q=80&w=1200&auto=format&fit=crop"
+                alt="Smart Speaker" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
-                <h3 class="product-name">Premium Product 10</h3>
+                <h3 class="product-name">Smart Speaker</h3>
                 <p class="product-price">$89.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$112.49</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Premium Product 10', '89.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_06_22.737Z.png')">Add
+                    onclick="addToCart('Smart Speaker', '89.99', 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -300,15 +292,15 @@
         <!-- Product 11 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_09_58.172Z.png"
-                alt="Product 11" class="product-image">
+            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1200&auto=format&fit=crop"
+                alt="Sport Shoes" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭒</div>
-                <h3 class="product-name">Luxury Product 11</h3>
+                <h3 class="product-name">Sport Shoes Pro</h3>
                 <p class="product-price">$159.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$199.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Luxury Product 11', '159.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_09_58.172Z.png')">Add
+                    onclick="addToCart('Sport Shoes Pro', '159.99', 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -316,15 +308,15 @@
         <!-- Product 12 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_16_42.992Z.png"
-                alt="Product 12" class="product-image">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop"
+                alt="Laptop" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
-                <h3 class="product-name">Elite Product 12</h3>
+                <h3 class="product-name">Gaming Laptop</h3>
                 <p class="product-price">$279.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$349.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Elite Product 12', '279.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_16_42.992Z.png')">Add
+                    onclick="addToCart('Gaming Laptop', '279.99', 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -348,15 +340,15 @@
         <!-- Product 14 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_40_05.667Z.png"
-                alt="Product 14" class="product-image">
+            <img src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?q=80&w=1200&auto=format&fit=crop"
+                alt="AirPods" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
-                <h3 class="product-name">Air Pords</h3>
+                <h3 class="product-name">AirPods</h3>
                 <p class="product-price">$399.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$499.99</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Air Pords', '399.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_40_05.667Z.png')">Add
+                    onclick="addToCart('AirPods', '399.99', 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -364,15 +356,15 @@
         <!-- Product 15 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/headphones_dark_bg_1765817692024.png"
-                alt="Product 15" class="product-image">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop"
+                alt="Headphones" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
-                <h3 class="product-name">Head Phones</h3>
+                <h3 class="product-name">Headphones</h3>
                 <p class="product-price">$129.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$162.49</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Head Phones', '129.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/headphones_dark_bg_1765817692024.png')">Add
+                    onclick="addToCart('Headphones', '129.99', 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -396,15 +388,15 @@
         <!-- Product 17 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_41_36.658Z.png"
-                alt="Product 17" class="product-image">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"
+                alt="MacBook Air" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭒</div>
-                <h3 class="product-name">Mack Book Air</h3>
+                <h3 class="product-name">MacBook Air</h3>
                 <p class="product-price">$569.99 <span
-                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$87.49</span></p>
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$712.49</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Mack Book Air', '569.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_41_36.658Z.png')">Add
+                    onclick="addToCart('MacBook Air', '569.99', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -412,15 +404,15 @@
         <!-- Product 18 -->
         <div class="product-card">
             <div class="discount-badge">RARE</div>
-            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_03_30.130Z.png"
-                alt="Product 18" class="product-image">
+            <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=1200&auto=format&fit=crop"
+                alt="AirPods Pro" class="product-image">
             <div class="product-info">
                 <div class="product-rating">⭐⭐⭐⭐⭐</div>
-                <h3 class="product-name">Air Pords</h3>
+                <h3 class="product-name">AirPods Pro</h3>
                 <p class="product-price">$349.99 <span
                         style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$437.49</span></p>
                 <button class="add-to-cart-btn"
-                    onclick="addToCart('Air Pords', '349.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_03_30.130Z.png')">Add
+                    onclick="addToCart('AirPods Pro', '349.99', 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=1200&auto=format&fit=crop')">Add
                     to Cart</button>
             </div>
         </div>
@@ -449,7 +441,6 @@
                     <li><a href="#">Twitter</a></li>
                 </ul>
             </div>
-        </div>
         </div>
         <div class="copyright">
             <p style="margin-bottom: 0.5rem;">&copy; 2024 H&S E-Commerce. All rights reserved.</p>
