@@ -1,0 +1,904 @@
+:root {
+    --primary-color: #000000;
+    --secondary-color: #333333;
+    --accent-color: #E60000;
+    /* Red */
+    --cool-tone: #1E3A8A;
+    --soft-highlight: #FF4D4D;
+    --white: #ffffff;
+    --light-gray: #1a1a1a;
+    --text-color: #ffffff;
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global Updates */
+body {
+    font-family: var(--font-main);
+    line-height: 1.6;
+    color: var(--white);
+    background-color: var(--primary-color);
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* =================================================================================
+   STATE MANAGEMENT (PURE CSS LOGIC)
+   ================================================================================= */
+/* Hide state checkboxes/radios */
+input[type="checkbox"].state-control,
+input[type="radio"].slider-control {
+    display: none;
+}
+
+/* --- Login Modal Logic --- */
+/* Open Modal */
+#login-toggle:checked~.modal-overlay {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+/* Switch from Phone Input to OTP Input */
+#otp-sent-toggle:checked~.modal-overlay .phone-input-section {
+    display: none;
+}
+
+#otp-sent-toggle:checked~.modal-overlay .otp-verification-section {
+    display: flex;
+}
+
+/* Logged In State Effect */
+/* 1. Close Modal */
+#logged-in-toggle:checked~.modal-overlay {
+    display: none !important;
+}
+
+/* 2. Hide Login Button in Nav */
+#logged-in-toggle:checked~.navbar .nav-icons .login-trigger {
+    display: none;
+}
+
+/* 3. Show Profile Icon in Nav */
+#logged-in-toggle:checked~.navbar .nav-icons .profile-trigger {
+    display: flex;
+    /* or block */
+}
+
+/* --- Hero Slider Logic --- */
+/* Default transparency for all slides */
+.hero-slide-img {
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+/* Active Slide Visibility */
+#slide1:checked~.v2-layout .hero-left-slider .slide-1-img,
+#slide2:checked~.v2-layout .hero-left-slider .slide-2-img,
+#slide3:checked~.v2-layout .hero-left-slider .slide-3-img {
+    opacity: 1;
+    pointer-events: auto;
+    /* Trigger Swing Animation when slide becomes active */
+    animation: swing 1s ease-in-out;
+}
+
+/* Navigation Arrow Visibility Control */
+/* Default hide all arrows, show only relevant ones based on current slide */
+.slider-arrow {
+    display: none;
+}
+
+/* If Slide 1 is active: Show Prev (to 3) and Next (to 2) */
+#slide1:checked~.v2-layout .hero-left-slider .nav-prev-3,
+#slide1:checked~.v2-layout .hero-left-slider .nav-next-2 {
+    display: flex;
+}
+
+/* If Slide 2 is active: Show Prev (to 1) and Next (to 3) */
+#slide2:checked~.v2-layout .hero-left-slider .nav-prev-1,
+#slide2:checked~.v2-layout .hero-left-slider .nav-next-3 {
+    display: flex;
+}
+
+/* If Slide 3 is active: Show Prev (to 2) and Next (to 1) */
+#slide3:checked~.v2-layout .hero-left-slider .nav-prev-2,
+#slide3:checked~.v2-layout .hero-left-slider .nav-next-1 {
+    display: flex;
+}
+
+
+/* =================================================================================
+   MAIN STYLES
+   ================================================================================= */
+
+/* 3. Enhanced Navbar with Glass */
+.navbar {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 24px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 3D Cube Logo */
+.logo-scene {
+    width: 40px;
+    height: 40px;
+    perspective: 600px;
+}
+
+.logo-cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-15deg) rotateY(25deg);
+    animation: spinLogo 8s infinite linear;
+}
+
+.logo-link:hover .logo-cube {
+    animation-duration: 2s;
+}
+
+.cube-face {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 24px;
+    color: var(--white);
+    background: rgba(230, 0, 0, 0.1);
+}
+
+.front {
+    transform: rotateY(0deg) translateZ(20px);
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(20px);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(20px);
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(20px);
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(20px);
+    background: var(--accent-color);
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(20px);
+    background: var(--accent-color);
+}
+
+@keyframes spinLogo {
+    0% {
+        transform: rotateX(-15deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(-15deg) rotateY(360deg);
+    }
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.nav-icons {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.nav-icon-btn,
+.login-trigger,
+.profile-trigger {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Initially hidden profile icon */
+.profile-trigger {
+    display: none;
+}
+
+.cart-icon {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--accent-color);
+    font-size: 24px;
+    padding: 24px 64px;
+    border-radius: 50%;
+}
+
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 64px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15vw;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+
+
+
+
+
+
+.hamza img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.v2-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1400px;
+    width: 100%;
+    z-index: 10;
+    align-items: center;
+}
+
+.hero-left-slider {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 50vh;
+}
+
+.hero-slide-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
+    transform-origin: top center;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 20;
+    font-size: 24px;
+    user-select: none;
+}
+
+.slider-arrow:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.arrow-left {
+    left: -20px;
+}
+
+.arrow-right {
+    right: -20px;
+}
+
+
+/* Swing Animation */
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    20% {
+        transform: rotate(15deg);
+    }
+
+    40% {
+        transform: rotate(-10deg);
+    }
+
+    60% {
+        transform: rotate(5deg);
+    }
+
+    80% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.hero-right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sub-headline {
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+
+
+.price-display {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.price-display .currency {
+    color: var(--accent-color);
+    font-size: 24px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 24px;
+}
+
+.btn-hero {
+    padding: 24px 64px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+
+.primary {
+    background: var(--accent-color);
+    color: white;
+}
+
+.primary:hover {
+    background: var(--soft-highlight);
+    transform: translateY(-3px);
+}
+
+.secondary {
+    border-color: white;
+    color: white;
+    background: transparent;
+}
+
+.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Components: Products */
+.section-title {
+    text-align: center;
+    font-size: 24px;
+    margin: 24px 0 24px;
+    color: white;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--accent-color);
+    margin: 24px auto;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(40, 40, 40, 0.6));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.product-card:hover {
+    transform: perspective(1000px) translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    background: #111;
+    transition: transform 0.3s;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 20px;
+    right: -35px;
+    background: linear-gradient(135deg, #FFD700, #FDB931, #FFD700);
+    color: #000;
+    padding: 8px 40px;
+    font-weight: 900;
+    font-size: 14px;
+    text-transform: uppercase;
+    transform: rotate(45deg);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    z-index: 5;
+    border: 2px solid white;
+    letter-spacing: 1px;
+    animation: shimmer 2s infinite linear;
+    background-size: 200% auto;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.product-info {
+    padding: 24px;
+}
+
+.product-name {
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.product-rating {
+    color: #FFD700;
+    margin-bottom: 24px;
+}
+
+.product-price {
+    font-size: 24px;
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.add-to-cart-btn:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(230, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    width: 90%;
+    max-width: 450px;
+    margin: 10vh auto;
+    padding: 24px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.close-modal-label {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+.close-modal-label:hover {
+    color: white;
+}
+
+.google-btn {
+    background: #4285F4;
+    color: white;
+    width: 100%;
+    padding: 24px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.phone-input-section,
+.otp-verification-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.otp-verification-section {
+    display: none;
+    /* Hidden initially */
+}
+
+.modal-input {
+    padding: 24px;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 5px;
+    font-size: 24px;
+}
+
+.action-btn-label {
+    background: var(--accent-color);
+    color: white;
+    padding: 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    margin-top: 24px;
+    transition: 0.3s;
+}
+
+.action-btn-label:hover {
+    background: var(--soft-highlight);
+}
+
+.success-btn {
+    background: #28a745;
+}
+
+.success-btn:hover {
+    background: #218838;
+}
+
+
+/* Cinematic Intro (CSS Animation Only) */
+#discount-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: radial-gradient(circle, #222 0%, #000 100%); */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2076&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Animation Sequence: Show -> Stay -> Exit */
+    animation: introSequence 4s forwards;
+}
+
+@keyframes introSequence {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    75% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Stay visible */
+    90% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    /* Exit Up */
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+        visibility: hidden;
+    }
+}
+
+.intro-content {
+    color: white;
+}
+
+.sale-tag {
+    font-size: 24px;
+    letter-spacing: 24px;
+    color: #888;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease 0.5s forwards;
+}
+
+.discount-huge {
+    font-size: 10vw;
+    line-height: 1;
+    font-weight: 900;
+    opacity: 0;
+    animation: zoomReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) 0.8s forwards;
+}
+
+.discount-huge .off {
+    font-size: 4vw;
+    color: var(--accent-color);
+    opacity: 0;
+    animation: slideInRight 0.5s ease 1.2s forwards;
+    display: inline-block;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomReveal {
+    from {
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Footer */
+footer {
+    background: #000;
+    padding: 24px 64px;
+    margin-top: 24px;
+    border-top: 1px solid #333;
+    text-align: center;
+    color: #888;
+}
+
+/* Cart Page Specifics */
+.cart-container {
+    max-width: 1000px;
+    margin: 24px auto 24px;
+    /* Added top margin for fixed nav */
+    padding: 24px;
+    background: var(--light-gray);
+    border-radius: 10px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 24px;
+    border-bottom: 1px solid #333;
+    text-align: left;
+}
+
+.cart-total-display {
+    text-align: right;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* =========================================
+   TYPEWRITER EFFECT (Re-implemented)
+   ========================================= */
+.typewriter-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.typewriter-text {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 5vw;
+    font-weight: 900;
+    color: var(--white);
+    overflow: hidden;
+    border-right: .15em solid var(--accent-color);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .1em;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    animation:
+        typing 3.5s steps(30, end) forwards,
+        blink-caret .75s step-end infinite;
+    max-width: fit-content;
+    background: linear-gradient(to bottom, #fff, #bbb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* Typing Animation */
+@keyframes typing {
+    0% {
+        width: 0;
+        opacity: 1;
+    }
+
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+/* Cursor Blinking */
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--accent-color)
+    }
+}

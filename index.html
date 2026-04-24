@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT E-Commerce - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+    <!-- =================================================================================
+         STATE MANAGEMENT CONTROLS (Top of Body)
+         These checkboxes drive the application state with JavaScript.
+         ================================================================================= -->
+    <!-- Login Modal State -->
+    <input type="checkbox" id="login-toggle" class="state-control">
+
+    <!-- OTP Flow State -->
+    <input type="checkbox" id="otp-sent-toggle" class="state-control">
+
+    <!-- Logged In State (Persistent via Checked Attribute Simulation) -->
+    <input type="checkbox" id="logged-in-toggle" class="state-control">
+
+
+
+
+
+
+    <!-- =================================================================================
+         NAVIGATION BAR
+         ================================================================================= -->
+    <header class="navbar">
+        <a href="index.html" class="logo-link">
+            <div class="logo-scene">
+                <div class="logo-cube">
+                    <div class="cube-face front">H</div>
+                    <div class="cube-face back">S</div>
+                    <div class="cube-face right">H</div>
+                    <div class="cube-face left">S</div>
+                    <div class="cube-face top"></div>
+                    <div class="cube-face bottom"></div>
+                </div>
+            </div>
+            <div class="logo-text">H&S Online Store</div>
+        </a>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="index.html#products">Products</a></li> <!-- Anchor link -->
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-icons">
+            <a href="cart.html" class="cart-icon">
+                <span>🛒</span>
+                <!-- Cart count is hardcoded to 2 for demo purposes -->
+
+            </a>
+
+            <!-- Login / Profile Triggers (Visibility controlled by #logged-in-toggle) -->
+            <!-- 1. Login Trigger matches label for #login-toggle -->
+            <label for="login-toggle" class="login-trigger" title="Login">
+                👤
+            </label>
+
+            <!-- 2. Profile Trigger (Hidden by default, shown when #logged-in-toggle is checked) -->
+            <div class="profile-trigger" title="Welcome User">
+                👋
+            </div>
+        </div>
+    </header>
+
+
+    <!-- =================================================================================
+         LOGIN MODAL
+         Visibility controlled by #login-toggle
+         ================================================================================= -->
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <label for="login-toggle" class="close-modal-label">×</label>
+
+            <h2>Login</h2>
+            <p>Access your account</p>
+
+            <!-- Google Login Simulation -->
+            <button onclick="googleLogin()" class="google-btn" type="button">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G">
+                Continue with Google
+            </button>
+
+            <div class="divider"><span>OR</span></div>
+
+            <!-- Phone / Login Flow -->
+            <div class="phone-input-section">
+                <input type="tel" id="phoneInput" placeholder="Enter Phone Number" class="modal-input" maxlength="11">
+                <button onclick="loginWithPhone()" class="action-btn-label success-btn" type="button">Login</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =================================================================================
+         HERO SECTION
+         ================================================================================= -->
+    <section class="hero">
+        <div class="hero-bg-text">FASHION</div>
+        <div class="v2-layout">
+            <div class="typewriter-container">
+                <h1 class="typewriter-text">GHAR SAY GAHR TAK SHOPPING</h1>
+            </div>
+
+            <!-- LEFT: Slider (Controlled by Radio Buttons) -->
+            <div class="hamza"
+                style="height:600px; width:1600px; position:absolute; top:0; left:0; background-size: cover; background-position: center;">
+
+
+
+
+            </div>
+
+
+
+    </section>
+
+
+    <!-- =================================================================================
+         FEATURED PRODUCTS (Static Render)
+         ================================================================================= -->
+    <h2 class="section-title" id="products">Fully Featured Products</h2>
+    <section class="products-grid">
+
+        <!-- Product 1 -->
+        <div class="product-card">
+            <div class="discount-badge">20% OFF</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_02_10.521Z.png"
+                alt="Headphones" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭒</div>
+                <h3 class="product-name">Shoes Mirrels</h3>
+                <p class="product-price">$79.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$99.99</span></p>
+                <!-- Link to static product page -->
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Shoes Mirrels', '79.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_02_10.521Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/smartwatch_dark_bg_1765817853949.png"
+                alt="Watch" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Smart Watch</h3>
+                <p class="product-price">$119.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$149.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Smart Watch', '119.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/smartwatch_dark_bg_1765817853949.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/running_shoes_dark_bg_1765818059548.png"
+                alt="Shoes" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭒</div>
+                <h3 class="product-name">Running Shoes</h3>
+                <p class="product-price">$63.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$79.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Running Shoes', '63.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/running_shoes_dark_bg_1765818059548.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+
+
+        <!-- Product 4 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=1200&auto=format&fit=crop"
+                alt="VR Headset" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Future VR Headset</h3>
+                <p class="product-price">$299.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$399.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Future VR Headset', '299.99', 'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=1200&auto=format&fit=crop')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=1200&auto=format&fit=crop"
+                alt="Drone" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Pro Camera Drone</h3>
+                <p class="product-price">$499.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$649.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Pro Camera Drone', '499.99', 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=1200&auto=format&fit=crop')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1000&auto=format&fit=crop"
+                alt="Smart Glasses" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭒</div>
+                <h3 class="product-name">Smart Vision Glasses</h3>
+                <p class="product-price">$199.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$249.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Smart Vision Glasses', '199.99', 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1000&auto=format&fit=crop')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_trousers_dark_1765817139466.png"
+                alt="Formal Trousers" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Premium Formal Trousers</h3>
+                <p class="product-price">$79.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$99.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Premium Formal Trousers', '79.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_trousers_dark_1765817139466.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_shirt_dark_1765817297421.png"
+                alt="Formal Shirt" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Classic Formal Shirt</h3>
+                <p class="product-price">$47.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$59.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Classic Formal Shirt', '47.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/formal_shirt_dark_1765817297421.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 9 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/baseball_cap_dark_1765817434159.png"
+                alt="Baseball Cap" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭒</div>
+                <h3 class="product-name">Streetwear Baseball Cap</h3>
+                <p class="product-price">$23.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$29.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Streetwear Baseball Cap', '23.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/baseball_cap_dark_1765817434159.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 10 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_06_22.737Z.png"
+                alt="Product 10" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Premium Product 10</h3>
+                <p class="product-price">$89.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$112.49</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Premium Product 10', '89.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_06_22.737Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 11 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_09_58.172Z.png"
+                alt="Product 11" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭒</div>
+                <h3 class="product-name">Luxury Product 11</h3>
+                <p class="product-price">$159.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$199.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Luxury Product 11', '159.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_09_58.172Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 12 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_16_42.992Z.png"
+                alt="Product 12" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Elite Product 12</h3>
+                <p class="product-price">$279.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$349.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Elite Product 12', '279.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_16_42.992Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 13 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=1200&auto=format&fit=crop"
+                alt="Wireless Earbuds" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Premium Wireless Earbuds</h3>
+                <p class="product-price">$89.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$112.49</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Premium Wireless Earbuds', '89.99', 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=1200&auto=format&fit=crop')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 14 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_40_05.667Z.png"
+                alt="Product 14" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Air Pords</h3>
+                <p class="product-price">$399.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$499.99</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Air Pords', '399.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_40_05.667Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 15 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/headphones_dark_bg_1765817692024.png"
+                alt="Product 15" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Head Phones</h3>
+                <p class="product-price">$129.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$162.49</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Head Phones', '129.99', 'file:///C:/Users/Ham/.gemini/antigravity/brain/792f5a5b-0d04-420b-a8b6-42cb0982a817/headphones_dark_bg_1765817692024.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 16 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=1200&auto=format&fit=crop"
+                alt="Gaming Keyboard" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">RGB Gaming Keyboard</h3>
+                <p class="product-price">$149.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$187.49</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('RGB Gaming Keyboard', '149.99', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=1200&auto=format&fit=crop')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 17 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_41_36.658Z.png"
+                alt="Product 17" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭒</div>
+                <h3 class="product-name">Mack Book Air</h3>
+                <p class="product-price">$569.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$87.49</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Mack Book Air', '569.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_41_36.658Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+        <!-- Product 18 -->
+        <div class="product-card">
+            <div class="discount-badge">RARE</div>
+            <img src="C:\Users\Ham\OneDrive\Pictures\Camera Roll\Google_AI_Studio_2025-12-15T18_03_30.130Z.png"
+                alt="Product 18" class="product-image">
+            <div class="product-info">
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+                <h3 class="product-name">Air Pords</h3>
+                <p class="product-price">$349.99 <span
+                        style="text-decoration: line-through; color: #666; font-size: 0.9rem;">$437.49</span></p>
+                <button class="add-to-cart-btn"
+                    onclick="addToCart('Air Pords', '349.99', 'C:\\Users\\Ham\\OneDrive\\Pictures\\Camera Roll\\Google_AI_Studio_2025-12-15T18_03_30.130Z.png')">Add
+                    to Cart</button>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We provide the best products at the best prices. Quality guaranteed.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+        <div class="copyright">
+            <p style="margin-bottom: 0.5rem;">&copy; 2024 H&S E-Commerce. All rights reserved.</p>
+            <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">Website developed by <strong>Hamza Saleem</strong> &
+                <strong>Shuja ul Hassan</strong>
+            </p>
+            <div style="font-size: 0.85rem; margin-top: 0.5rem;">
+                <p style="margin: 0.3rem 0;">📞 Contact: <a href="tel:03035070436"
+                        style="color: var(--accent-color); background: rgba(230, 0, 0, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; text-decoration: underline;">0303-5070436</a>
+                </p>
+                <p style="margin: 0.3rem 0;">
+                    📧 Email:
+                    <a href="mailto:hamzasaleem22@gmail.com"
+                        style="color: var(--accent-color); background: rgba(230, 0, 0, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; text-decoration: underline;">hamzasaleem22@gmail.com</a>
+                    |
+                    <a href="mailto:shujaulhassan@gmail.com"
+                        style="color: var(--accent-color); background: rgba(230, 0, 0, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; text-decoration: underline;">shujaulhassan@gmail.com</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- External JavaScript File -->
+    <script src="js/cart.js"></script>
+</body>
+
+</html>
