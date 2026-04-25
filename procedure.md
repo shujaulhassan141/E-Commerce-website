@@ -11,27 +11,216 @@ For project overview and architecture, see [README.md](README.md)
 
 ## Prerequisites
 
-Before starting, ensure you have:
+Before starting, you need to install:
 
-- **Node.js** v16 or higher ([Download](https://nodejs.org/))
-- **MySQL** 5.7+ or 8.0+ ([Download](https://dev.mysql.com/downloads/))
-- **Git** ([Download](https://git-scm.com/))
-- A MySQL root password (set during MySQL installation)
+- **Node.js** v16 or higher
+- **MySQL** 5.7+ or 8.0+
+- **Git**
 
-### Verify Installation
+---
 
-Run these commands to verify:
+## Step 1 — Install Node.js
+
+### Windows
+
+1. Go to [https://nodejs.org/](https://nodejs.org/)
+2. Download the **LTS version** (recommended for most users)
+3. Run the installer (`.msi` file)
+4. Follow the installation wizard:
+   - Accept the license agreement
+   - Keep default installation path: `C:\Program Files\nodejs\`
+   - Check "Automatically install necessary tools" (installs build tools)
+5. Click "Install" and wait for completion
+6. Restart your terminal/command prompt
+
+### macOS
+
+**Option 1: Official Installer**
+1. Go to [https://nodejs.org/](https://nodejs.org/)
+2. Download the **LTS version**
+3. Run the `.pkg` installer
+4. Follow the installation wizard
+
+**Option 2: Homebrew**
+```bash
+brew install node
+```
+
+### Linux (Ubuntu/Debian)
+
+```bash
+# Update package index
+sudo apt update
+
+# Install Node.js and npm
+sudo apt install nodejs npm
+
+# Verify installation
+node --version
+npm --version
+```
+
+### Verify Node.js Installation
+
+Open a **new** terminal and run:
 
 ```bash
 node --version    # Should show v16.0.0 or higher
 npm --version     # Should show 7.0.0 or higher
-mysql --version   # Should show MySQL version
-git --version     # Should show Git version
+```
+
+If commands not found, restart your computer and try again.
+
+---
+
+## Step 2 — Install MySQL
+
+### Windows
+
+1. Go to [https://dev.mysql.com/downloads/installer/](https://dev.mysql.com/downloads/installer/)
+2. Download **MySQL Installer for Windows** (larger "web" version recommended)
+3. Run the installer (`.msi` file)
+4. Choose setup type:
+   - Select **"Developer Default"** (includes MySQL Server, Workbench, and tools)
+   - Click "Next"
+5. Click "Execute" to download and install all products
+6. **Configuration steps:**
+   - **Type and Networking:**
+     - Config Type: Development Computer
+     - Port: 3306 (default)
+     - Click "Next"
+   - **Authentication Method:**
+     - Select "Use Strong Password Encryption" (recommended)
+     - Click "Next"
+   - **Accounts and Roles:**
+     - Set MySQL Root Password: **Choose a strong password and remember it**
+     - Write it down: `____________________`
+     - Click "Next"
+   - **Windows Service:**
+     - Keep "Configure MySQL Server as a Windows Service" checked
+     - Service Name: MySQL80
+     - Start at System Startup: Checked
+     - Click "Next"
+   - Click "Execute" to apply configuration
+7. Click "Finish" when complete
+
+### macOS
+
+**Using Homebrew (Recommended):**
+
+```bash
+# Install MySQL
+brew install mysql
+
+# Start MySQL service
+brew services start mysql
+
+# Secure installation (set root password)
+mysql_secure_installation
+```
+
+When prompted:
+- Set root password: **Choose a strong password and remember it**
+- Remove anonymous users: Yes
+- Disallow root login remotely: Yes
+- Remove test database: Yes
+- Reload privilege tables: Yes
+
+**Using Official Installer:**
+1. Go to [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/)
+2. Download MySQL Community Server for macOS
+3. Run the `.dmg` installer
+4. Follow installation wizard and set root password
+
+### Linux (Ubuntu/Debian)
+
+```bash
+# Update package index
+sudo apt update
+
+# Install MySQL Server
+sudo apt install mysql-server
+
+# Start MySQL service
+sudo systemctl start mysql
+
+# Enable MySQL to start on boot
+sudo systemctl enable mysql
+
+# Secure installation (set root password)
+sudo mysql_secure_installation
+```
+
+When prompted:
+- Set root password: **Choose a strong password and remember it**
+- Remove anonymous users: Yes
+- Disallow root login remotely: Yes
+- Remove test database: Yes
+- Reload privilege tables: Yes
+
+### Verify MySQL Installation
+
+**Windows:**
+```bash
+# Check if MySQL service is running
+net start | findstr MySQL
+
+# Test MySQL connection (enter your root password when prompted)
+mysql -u root -p -e "SELECT VERSION();"
+```
+
+**macOS/Linux:**
+```bash
+# Check if MySQL service is running
+brew services list | grep mysql    # macOS
+sudo systemctl status mysql        # Linux
+
+# Test MySQL connection (enter your root password when prompted)
+mysql -u root -p -e "SELECT VERSION();"
+```
+
+You should see MySQL version information. If you see "Access denied" or "command not found", see Troubleshooting section.
+
+---
+
+## Step 3 — Install Git
+
+### Windows
+
+1. Go to [https://git-scm.com/download/win](https://git-scm.com/download/win)
+2. Download the installer
+3. Run the installer
+4. Follow the wizard (keep default settings)
+5. Restart your terminal
+
+### macOS
+
+**Option 1: Xcode Command Line Tools**
+```bash
+xcode-select --install
+```
+
+**Option 2: Homebrew**
+```bash
+brew install git
+```
+
+### Linux (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install git
+```
+
+### Verify Git Installation
+
+```bash
+git --version    # Should show Git version
 ```
 
 ---
 
-## Step 1 — Clone the Repository
+## Step 4 — Clone the Repository
 
 ```bash
 git clone https://github.com/hamzasaleem22/E-Commerce-Webiste.git
@@ -42,16 +231,18 @@ You should now be in the project root directory.
 
 ---
 
-## Step 2 — Set Up MySQL Database
+## Step 5 — Set Up MySQL Database
 
-### 2.1 Start MySQL Service
+### 5.1 Verify MySQL is Running
 
-Ensure MySQL is running:
+Ensure MySQL service is running:
 
 **Windows:**
 ```bash
 net start MySQL80
 ```
+
+If already running, you'll see "The requested service has already been started."
 
 **macOS:**
 ```bash
@@ -61,9 +252,10 @@ brew services start mysql
 **Linux:**
 ```bash
 sudo systemctl start mysql
+sudo systemctl status mysql    # Check status
 ```
 
-### 2.2 Create Database and Tables
+### 5.2 Create Database and Tables
 
 From the project root directory, run:
 
@@ -77,7 +269,7 @@ This creates:
 - Database: `hs_store`
 - 8 tables: categories, products, users, sessions, cart_items, orders, order_items, contacts
 
-### 2.3 Seed Initial Data
+### 5.3 Seed Initial Data
 
 ```bash
 mysql -u root -p < server/database/seed.sql
@@ -91,7 +283,7 @@ This inserts:
 
 ---
 
-## Step 3 — Configure Environment Variables
+## Step 6 — Configure Environment Variables
 
 The backend configuration is in `server/.env`. Update it with your MySQL credentials:
 
@@ -110,7 +302,7 @@ PORT=3000
 
 ---
 
-## Step 4 — Install Node.js Dependencies
+## Step 7 — Install Node.js Dependencies
 
 From the project root:
 
@@ -127,7 +319,7 @@ This installs:
 
 ---
 
-## Step 5 — Start the Backend Server
+## Step 8 — Start the Backend Server
 
 ### Production Mode
 
@@ -150,7 +342,7 @@ H&S Store server running → http://localhost:3000
 
 ---
 
-## Step 6 — Open the Website
+## Step 9 — Open the Website
 
 Open your browser and navigate to:
 
@@ -167,7 +359,7 @@ http://localhost:3000/
 
 ---
 
-## Step 7 — Verify Everything Works
+## Step 10 — Verify Everything Works
 
 ### Test 1: Products Load from Database
 
@@ -205,6 +397,7 @@ SELECT COUNT(*) FROM products;
 SELECT * FROM categories;
 
 -- Check cart items (should show items you added)
+SELECT * FROM cart_items;
 SELECT * FROM cart_items;
 ```
 
@@ -279,6 +472,94 @@ The backend exposes these REST API endpoints:
 **Fix:** Run the schema file:
 ```bash
 mysql -u root -p < server/database/schema.sql
+```
+
+---
+
+### "mysql: command not found" (Windows)
+
+**Cause:** MySQL bin directory not in system PATH
+
+**Fix:**
+
+1. Find MySQL installation path (usually `C:\Program Files\MySQL\MySQL Server 8.0\bin\`)
+2. Add to PATH:
+   - Open System Properties → Environment Variables
+   - Under "System variables", find "Path" and click "Edit"
+   - Click "New" and add: `C:\Program Files\MySQL\MySQL Server 8.0\bin`
+   - Click "OK" on all windows
+3. **Restart your terminal** (important!)
+4. Test: `mysql --version`
+
+**Alternative:** Use full path:
+```bash
+"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p
+```
+
+---
+
+### "mysql: command not found" (macOS/Linux)
+
+**Cause:** MySQL not installed or not in PATH
+
+**Fix:**
+
+**macOS:**
+```bash
+# If installed via Homebrew
+brew link mysql
+
+# Add to PATH in ~/.zshrc or ~/.bash_profile
+echo 'export PATH="/usr/local/mysql/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Linux:**
+```bash
+# Check if MySQL is installed
+dpkg -l | grep mysql-server
+
+# If not installed
+sudo apt install mysql-server
+
+# If installed but not in PATH
+export PATH=$PATH:/usr/bin
+```
+
+---
+
+### "Access denied for user 'root'@'localhost'"
+
+**Cause:** Wrong password or root user not configured
+
+**Fix:**
+
+**Windows:**
+1. Stop MySQL service: `net stop MySQL80`
+2. Start MySQL in safe mode (skip grant tables)
+3. Reset root password
+4. Restart MySQL service: `net start MySQL80`
+
+**macOS/Linux:**
+```bash
+# Stop MySQL
+sudo systemctl stop mysql    # Linux
+brew services stop mysql     # macOS
+
+# Start in safe mode
+sudo mysqld_safe --skip-grant-tables &
+
+# Connect without password
+mysql -u root
+
+# Reset password
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password';
+FLUSH PRIVILEGES;
+exit;
+
+# Restart MySQL normally
+sudo systemctl start mysql    # Linux
+brew services start mysql     # macOS
 ```
 
 ---
