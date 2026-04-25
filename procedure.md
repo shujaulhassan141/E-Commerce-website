@@ -1,96 +1,45 @@
-# H&S Online Store — Setup Guide
+# MySQL Database Setup Guide
 
-Simple step-by-step guide to connect MySQL database to your project.
-
-**Time:** 10-15 minutes  
-**Level:** Beginner
-
----
-
-## What You Need
-
-- Node.js installed
-- MySQL installed
-- This project downloaded
+Simple guide to connect MySQL to your E-Commerce project.
 
 ---
 
 ## Step 1: Install MySQL
 
-### Windows
+Download and install MySQL from: https://dev.mysql.com/downloads/installer/
 
-1. Download MySQL from: https://dev.mysql.com/downloads/installer/
-2. Run the installer
-3. Choose "Developer Default"
-4. Click "Next" → "Execute" → Wait for installation
-5. **Important:** When asked for password, set a password and remember it
-6. Click "Next" until finished
-
-### Mac
-
-```bash
-brew install mysql
-brew services start mysql
-mysql_secure_installation
-```
-
-Set a password when asked.
-
-### Linux
-
-```bash
-sudo apt install mysql-server
-sudo systemctl start mysql
-sudo mysql_secure_installation
-```
-
-Set a password when asked.
+**During installation:**
+- Choose "Developer Default"
+- Set a password (remember this!)
+- Click Next until finished
 
 ---
 
-## Step 2: Check MySQL is Running
+## Step 2: Open Your Project
 
-Open terminal/command prompt:
-
-**Windows:**
-```bash
-net start MySQL80
-```
-
-**Mac/Linux:**
-```bash
-mysql --version
-```
-
-You should see MySQL version number.
-
----
-
-## Step 3: Open Project Folder
+Open terminal in your project folder:
 
 ```bash
 cd E-Commerce-Webiste
 ```
 
-Make sure you're in the project folder.
-
 ---
 
-## Step 4: Create Database
+## Step 3: Create Database
 
-Run this command (replace `****` with your MySQL password):
+Run this command:
 
 ```bash
 mysql -u root -p < server/database/schema.sql
 ```
 
-When it asks for password, type your MySQL password and press Enter.
+Type your MySQL password when asked.
 
-**What this does:** Creates a database called `hs_store` with 8 tables.
+**This creates the database with all tables.**
 
 ---
 
-## Step 5: Add Sample Data
+## Step 4: Add Products Data
 
 Run this command:
 
@@ -98,13 +47,13 @@ Run this command:
 mysql -u root -p < server/database/seed.sql
 ```
 
-Enter your MySQL password when asked.
+Type your MySQL password.
 
-**What this does:** Adds 18 products and 7 categories to your database.
+**This adds 18 products to your database.**
 
 ---
 
-## Step 6: Connect Database to Project
+## Step 5: Connect Database to Project
 
 Open file: `server/.env`
 
@@ -113,196 +62,119 @@ Change this line:
 DB_PASSWORD=[YOUR_MYSQL_PASSWORD]
 ```
 
-To your actual password. Example:
+Put your actual MySQL password:
 ```
-DB_PASSWORD=mypassword123
+DB_PASSWORD=yourpassword
 ```
 
-**Save the file.**
+Save the file.
 
 ---
 
-## Step 7: Install Project Dependencies
+## Step 6: Install and Run
 
 ```bash
 npm install
-```
-
-Wait for it to finish.
-
----
-
-## Step 8: Start the Server
-
-```bash
 npm start
 ```
 
-You should see:
-```
-H&S Store server running → http://localhost:3000
-```
+Open browser: http://localhost:3000
 
-**Keep this window open!**
+**Done! Your website now uses MySQL database.**
 
 ---
 
-## Step 9: Open Website
+## View Database Data
 
-Open your browser and go to:
-```
-http://localhost:3000
-```
-
-You should see the store with 18 products.
-
----
-
-## Step 10: View Database Data
-
-Open terminal and run:
+Open MySQL:
 
 ```bash
 mysql -u root -p
 ```
 
-Enter your password.
-
-Then type these commands:
+Enter password, then:
 
 ```sql
 USE hs_store;
-
--- See all products
 SELECT * FROM products;
-
--- See all categories
-SELECT * FROM categories;
-
--- Exit
-exit;
 ```
+
+You'll see all 18 products.
 
 ---
 
-## How to Do CRUD Operations
+## CRUD Operations
 
-### View Data (READ)
+### See Data (READ)
 
 ```sql
--- See all products
+-- All products
 SELECT * FROM products;
 
--- See one product
+-- One product
 SELECT * FROM products WHERE id = 1;
 
--- See products by category
+-- Products by category
 SELECT * FROM products WHERE category_id = 2;
 ```
 
 ### Add Data (CREATE)
 
 ```sql
--- Add a new product
+-- Add new product
 INSERT INTO products (name, price, category_id, image_url, rating) 
-VALUES ('New Product', 99.99, 1, 'image.jpg', 4.5);
+VALUES ('New Shoes', 89.99, 1, 'shoes.jpg', 4.5);
 ```
 
-### Update Data (UPDATE)
+### Change Data (UPDATE)
 
 ```sql
--- Change product price
-UPDATE products SET price = 79.99 WHERE id = 1;
+-- Change price
+UPDATE products SET price = 69.99 WHERE id = 1;
 
--- Change product name
-UPDATE products SET name = 'Updated Name' WHERE id = 1;
+-- Change name
+UPDATE products SET name = 'New Name' WHERE id = 1;
 ```
 
-### Delete Data (DELETE)
+### Remove Data (DELETE)
 
 ```sql
--- Delete a product
+-- Delete one product
 DELETE FROM products WHERE id = 1;
 
--- Delete all products in a category
+-- Delete by category
 DELETE FROM products WHERE category_id = 2;
 ```
 
 ---
 
-## Common Problems
+## Common Issues
 
-### "Access denied for user 'root'"
+**"Access denied"**
+- Fix: Check password in `server/.env` file
 
-**Problem:** Wrong password in `.env` file
+**"Unknown database"**
+- Fix: Run `mysql -u root -p < server/database/schema.sql` again
 
-**Fix:** Open `server/.env` and check `DB_PASSWORD` matches your MySQL password
+**"Cannot GET /api/products"**
+- Fix: Run `npm start`
 
----
-
-### "Unknown database 'hs_store'"
-
-**Problem:** Database not created
-
-**Fix:** Run this again:
-```bash
-mysql -u root -p < server/database/schema.sql
-```
+**"Port 3000 in use"**
+- Fix: Change `PORT=3001` in `server/.env`
 
 ---
 
-### "Cannot GET /api/products"
-
-**Problem:** Server not running
-
-**Fix:** Run:
-```bash
-npm start
-```
-
----
-
-### "mysql: command not found"
-
-**Problem:** MySQL not in PATH (Windows)
-
-**Fix:** Use full path:
-```bash
-"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p
-```
-
----
-
-### "Port 3000 already in use"
-
-**Problem:** Another app using port 3000
-
-**Fix:** Change port in `server/.env`:
-```
-PORT=3001
-```
-
-Then open: `http://localhost:3001`
-
----
-
-## Quick Commands Reference
+## Quick Reference
 
 ```bash
-# Start server
-npm start
-
-# Stop server
-Press Ctrl+C
-
-# Open MySQL
-mysql -u root -p
-
 # Create database
 mysql -u root -p < server/database/schema.sql
 
-# Add sample data
+# Add data
 mysql -u root -p < server/database/seed.sql
+
+# Start server
+npm start
 
 # View database
 mysql -u root -p hs_store
@@ -310,16 +182,4 @@ mysql -u root -p hs_store
 
 ---
 
-## What Each File Does
-
-- `server/database/schema.sql` — Creates database structure (tables)
-- `server/database/seed.sql` — Adds sample products
-- `server/.env` — Database password and settings
-- `server/server.js` — Starts the web server
-- `server/api/` — Handles database operations (CRUD)
-
----
-
-## Done!
-
-Your store is now connected to MySQL database. Products are stored in the database and will stay even after you close the browser.
+That's it! Your MySQL database is connected and working.
