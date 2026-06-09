@@ -292,7 +292,7 @@ mysqldump -u root -p hs_store > backup.sql
 | Name | Email |
 |------|-------|
 | Hamza Saleem | hamzasaleem22@gmail.com |
-| Shuja ul Hassan | xhujaulhaxxan99@gmail.com | 
+|  Muhammad Shuja ul Hassan | xhujaulhaxxan99@gmail.com | 
 
 **Contact:** 0303-5070436 and 03142959358
 
